@@ -14,7 +14,11 @@ const MongoDBURI = process.env.MONGO_URI || 'mongodb://localhost/ManualAuth';
 //   useNewUrlParser: true
 // });
 
-mongoose.connect('mongodb+srv://username:password@your-host.mongodb.net/yourDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect('mongodb+srv://username:password@your-host.mongodb.net/yourDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+const dbURI = 'yourConnectionString';
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Database connected!'))
+    .catch(err => console.log('Connection error:', err));
 
 
 const db = mongoose.connection;
