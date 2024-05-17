@@ -117,10 +117,10 @@ router.post('/forgetpass', (req, res, next) => {
 						console.log(err);
 					else
 						console.log('Success');
-					res.send({ "Success": "Password changed!" });
+					res.send({ "Success": "Senha atualizada/" });
 				});
 			} else {
-				res.send({ "Success": "Password does not matched! Both Password should be same." });
+				res.send({ "Success": "A senha deve ser igual." });
 			}
 		}
 	});
