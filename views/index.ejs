@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>App de registro do login</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	</script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="./css/main.css">
+
+	<script type="text/javascript">
+		$(document).ready(() => {
+			$("#form1").submit((event) => {
+				event.preventDefault();
+
+				$.ajax({
+					type: 'POST',
+					url: '/',
+					data: $('#form1').serialize(),
+					dataType: "json",
+					success: (response) => {
+						$('#form1')[0].reset();
+						document.getElementById("check").innerHTML = response.Success;
+						setTimeout(() => {
+							document.getElementById("check").innerHTML = "";
+						}, 3000);
+						if (response.Success == "Você pode logar agora com este registro.") {
+							document.getElementById("aa").click();
+						};
+					},
+					error: () => {
+					}
+				})
+			});
+
+			// Adicionar formatação ao campo CPF
+			$('input[name="cpf"]').on('input', function() {
+				var valor = $(this).val();
+				valor = valor.replace(/\D/g, "");
+				valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+				valor = valor.replace(/(\d{3})(\d{3})(\d)/, "$1.$2.$3");
+				valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, "$1.$2.$3-$4");
+				$(this).val(valor.substring(0, 14));
+			});
+		});
+	</script>
+</head>
+
+<body>
+
+	<div class="col-md-4 col-md-offset-4 form-card">
+		<div>
+			<p>Cadastro
+			</p>
+		</div>
+		<div class="form-group">
+			<form id="form1" method="post">
+				<input type="text" name="email" placeholder="E-mail" required=""
+				pattern="[-!#$%&'*+\/0-9=?ก-๙A-Z^_a-z`{|}~](\.?[-!#$%&'*+\/0-9=?ก-๙A-Z^_a-z`{|}~])*@[ก-๙a-zA-Z0-9](-*\.?[ก-๙a-zA-Z0-9])*\.[ก-๙a-zA-Z](-?[ก-๙a-zA-Z0-9])+$" class="form-control"><br />
+				<input type="text" name="cpf" placeholder="000.000.000-00" class="form-control"><br />
+				<input type="date" name="nasc" placeholder="Data de nascimento" required="" 
+				min= "1950-12-30" class="form-control"><br />
+				<input type="text" name="username" placeholder="Usuário" required="" class="form-control"><br />
+				<input type="password" name="password" placeholder="Senha" required="" class="form-control"><br />
+				<input type="password" name="passwordConf" placeholder="Confirmar Senha" required=""
+					class="form-control"><br />
+				<input type="submit" value="Registrar" class="btn btn-success">
+			</form>
+		</div>
+
+		<div class="mssg bg-danger">
+			<span id="check"></span>
+		</div>
+		<div>
+			<span>Se já possui uma conta registrada  <a href="/login">Login</a></span>
+		</div>
+		<div id="LangTable"><a href="/login" id="aa"></a>
+		</div>
+	</div>
+</body>
+
+</html>
