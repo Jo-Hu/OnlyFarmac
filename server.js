@@ -7,20 +7,22 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
+// Environment variable or fallback to local MongoDB
 const MongoDBURI = process.env.MONGO_URI || 'mongodb://localhost/ManualAuth';
 
+// Connect to MongoDB
 mongoose.connect(MongoDBURI, {
   useUnifiedTopology: true,
   useNewUrlParser: true
 });
 
-// Here, replace `db` with `mongoose.connection`
+// Correct usage with newer connect-mongo
 app.use(session({
   secret: 'work hard',
   resave: true,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: MongoDBURI // Use the MongoURL directly, simplifying configuration
+    mongoUrl: MongoDBURI  // Directly use the MongoDB URI
   })
 }));
 
@@ -32,24 +34,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(__dirname + '/views'));
 
+// Assume 'index' is correctly defined in your routes
 const index = require('./routes/index');
 app.use('/', index);
 
-// catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('File Not Found');
   err.status = 404;
   next(err);
 });
 
-// error handler
-// define as the last app.use callback
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.send(err.message);
 });
 
-// listen on port 3000
 app.listen(process.env.PORT || 3000, () => {
   console.log('Express app listening on port 3000');
 });
