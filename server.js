@@ -15,16 +15,15 @@ const MongoDBURI = process.env.MONGO_URI || 'mongodb://localhost/ManualAuth';
 // });
 
 // mongoose.connect('mongodb+srv://username:password@your-host.mongodb.net/yourDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
-const dbURI = 'yourConnectionString';
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Database connected!'))
-    .catch(err => console.log('Connection error:', err));
+const mongoURI = 'mongodb+srv://username:password@your-cluster-url/databaseName';
 
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Database connection successful'))
+  .catch(err => console.error('Database connection error:', err));
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-});
+  const mongoURI = process.env.MONGO_URI;
+  mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+  
 
 app.use(session({
   secret: 'work hard',
