@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const mongoURI = process.env.MONGO_URI;
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
@@ -14,15 +15,17 @@ const MongoDBURI = process.env.MONGO_URI || 'mongodb://localhost/ManualAuth';
 //   useNewUrlParser: true
 // });
 
-// mongoose.connect('mongodb+srv://username:password@your-host.mongodb.net/yourDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
-// const mongoURI = 'mongodb+srv://username:password@your-cluster-url/databaseName';
+mongoose.connect(MongoDBURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('Database connection successful');
+    // If you need a reference to the database connection
+    const db = mongoose.connection;
 
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Database connection successful'))
+    // Use db for further operations
+    db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+  })
   .catch(err => console.error('Database connection error:', err));
 
-  const mongoURI = process.env.MONGO_URI;
-  mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
   
 
 app.use(session({
