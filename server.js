@@ -2,6 +2,7 @@ const express = require('express');
 const ejs = require('ejs');
 const path = require('path');
 const app = express();
+const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
