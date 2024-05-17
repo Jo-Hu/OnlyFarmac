@@ -4,9 +4,8 @@ const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const mongoURI = process.env.MONGO_URI;
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 
 const MongoDBURI = process.env.MONGO_URI || 'mongodb://localhost/ManualAuth';
 
@@ -15,14 +14,13 @@ mongoose.connect(MongoDBURI, {
   useNewUrlParser: true
 });
 
-  
-
+// Here, replace `db` with `mongoose.connection`
 app.use(session({
   secret: 'work hard',
   resave: true,
   saveUninitialized: false,
-  store: new MongoStore({
-    mongooseConnection: db
+  store: MongoStore.create({
+    mongoUrl: MongoDBURI // Use the MongoURL directly, simplifying configuration
   })
 }));
 
