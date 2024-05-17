@@ -8,14 +8,20 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
-const MongoDBURI = process.env.MONGO_URI || 'mongodb://localhost/ManualAuth';
+// const MongoDBURI = process.env.MONGO_URI || 'mongodb://localhost/ManualAuth';
 
-mongoose.connect(MongoDBURI, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true
-}).catch(err => {
-  console.error('Database connection error:', err);
-});
+// mongoose.connect(MongoDBURI, {
+//   useUnifiedTopology: true,
+//   useNewUrlParser: true
+// }).catch(err => {
+//   console.error('Database connection error:', err);
+// });
+mongoose.connect('mongodb+srv://username:password@your-host.mongodb.net/yourDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+
+const dbURI = 'yourConnectionString';
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Database connected!'))
+    .catch(err => console.log('Connection error:', err));
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
