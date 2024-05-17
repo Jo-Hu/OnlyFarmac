@@ -9,12 +9,13 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "mongoose": "^5.13.3",
-    "nodemon": "^2.0.15"
+    "netlify-lambda": "^2.0.16",
+    "nodemon": "^2.0.15",
+    "serverless-http": "^3.2.0"
   },
-  "devDependencies": {},
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node_modules\\.bin\\netlify-lambda serve src",
+    "build": "node_modules\\.bin\\netlify-lambda build src"
   },
   "repository": {
     "type": "git",
