@@ -9,10 +9,13 @@ const MongoStore = require('connect-mongo')(session);
 
 const MongoDBURI = process.env.MONGO_URI || 'mongodb://localhost/ManualAuth';
 
-mongoose.connect(MongoDBURI, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true
-});
+// mongoose.connect(MongoDBURI, {
+//   useUnifiedTopology: true,
+//   useNewUrlParser: true
+// });
+
+mongoose.connect('mongodb+srv://username:password@your-host.mongodb.net/yourDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
