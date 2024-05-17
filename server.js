@@ -10,21 +10,10 @@ const MongoStore = require('connect-mongo')(session);
 
 const MongoDBURI = process.env.MONGO_URI || 'mongodb://localhost/ManualAuth';
 
-// mongoose.connect(MongoDBURI, {
-//   useUnifiedTopology: true,
-//   useNewUrlParser: true
-// });
-
-mongoose.connect(MongoDBURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('Database connection successful');
-    // If you need a reference to the database connection
-    const db = mongoose.connection;
-
-    // Use db for further operations
-    db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-  })
-  .catch(err => console.error('Database connection error:', err));
+mongoose.connect(MongoDBURI, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true
+});
 
   
 
