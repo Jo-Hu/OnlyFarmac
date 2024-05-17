@@ -20,12 +20,25 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
 });
 
+// app.use(session({
+//   secret: 'work hard',
+//   resave: true,
+//   saveUninitialized: false,
+//   store: new MongoStore({
+//     mongooseConnection: db
+//   })
+// }));
+
+const MongoStore = require('connect-mongo');
+
+// Later in your session configuration
 app.use(session({
   secret: 'work hard',
   resave: true,
   saveUninitialized: false,
   store: new MongoStore({
-    mongooseConnection: db
+    mongoUrl: MongoDBURI,
+    collectionName: 'sessions'
   })
 }));
 
